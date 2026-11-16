@@ -9,7 +9,7 @@ namespace SanCarlitos.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    [Authorize]
+    //[Authorize]
     public class VeterinariosController : ControllerBase
     {
         private readonly IVeterinarioService _service;

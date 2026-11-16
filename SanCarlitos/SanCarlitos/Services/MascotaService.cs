@@ -5,8 +5,6 @@ using SanCarlitos.Dtos.Paginacion;
 using SanCarlitos.Services.Interfaces;
 using SanCarlitos.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using SanCarlitos.Dtos.Paginacion;
-using SanCarlitos.Dtos.Mascota;
 using SanCarlitos.Models;
 
 

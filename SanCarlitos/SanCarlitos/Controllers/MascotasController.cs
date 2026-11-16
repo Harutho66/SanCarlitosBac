@@ -12,7 +12,7 @@ namespace SanCarlitos.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    [Authorize]
+    //[Authorize]
     public class MascotasController : ControllerBase
     {
         private readonly IMascotaService _service;

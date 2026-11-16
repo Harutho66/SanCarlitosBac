@@ -10,7 +10,7 @@ namespace SanCarlitos.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PropietariosController : ControllerBase
     {
         private readonly IPropietarioService _service;

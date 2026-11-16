@@ -20,7 +20,7 @@ using VeterinariaAPI.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// LECTURA DE CONFIGURACIÓN JWT
 
 var jwtSettings = builder.Configuration
     .GetSection(JwtSettings.SectionName)
@@ -51,12 +51,24 @@ if (jwtSettings.ExpirationMinutes <= 0)
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection(JwtSettings.SectionName));
 
-
-
-// Add services to the container.
+// CONTROLADORES
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+// CONFIGURACIÓN CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularPolicy", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+// OPENAPI Y SCALAR
+
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer<
@@ -66,46 +78,53 @@ builder.Services.AddOpenApi(options =>
         BearerSecuritySchemeTransformer>();
 });
 
+// BASE DE DATOS
 
 builder.Services.AddDbContext<VeterinariaContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("conexion")));
 
+// AUTOMAPPER
 
 builder.Services.AddAutoMapper(
     cfg => { },
     typeof(MappingProfile)
 );
 
-
 // REPOSITORIO GENÉRICO
-builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
-builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
+builder.Services.AddScoped(
+    typeof(IGenericRepository<>),
+    typeof(GenericRepository<>));
 
-// Repositories
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddScoped<IMascotaRepository,MascotaRepository>();
-builder.Services.AddScoped<IPropietarioRepository,PropietarioRepository>();
+// REPOSITORIOS
+
+builder.Services.AddScoped<IMascotaRepository, MascotaRepository>();
+builder.Services.AddScoped<IPropietarioRepository, PropietarioRepository>();
 builder.Services.AddScoped<IVeterinarioRepository, VeterinarioRepository>();
-builder.Services.AddScoped<ITratamientoRepository,TratamientoRepository>();
-builder.Services.AddScoped<IConsultaRepository,ConsultaRepository>();
+builder.Services.AddScoped<ITratamientoRepository, TratamientoRepository>();
+builder.Services.AddScoped<IConsultaRepository, ConsultaRepository>();
 builder.Services.AddScoped<IReporteRepository, ReporteRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-// Servicios
+
+// SERVICIOS
+
 builder.Services.AddScoped<IMascotaService, MascotaService>();
-builder.Services.AddScoped<IPropietarioService,  PropietarioService>();
+builder.Services.AddScoped<IPropietarioService, PropietarioService>();
 builder.Services.AddScoped<IVeterinarioService, VeterinarioService>();
 builder.Services.AddScoped<IConsultaService, ConsultaService>();
-builder.Services.AddScoped<ITratamientoService,TratamientoService>();
+builder.Services.AddScoped<ITratamientoService, TratamientoService>();
 builder.Services.AddScoped<IReporteService, ReporteService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IAutenticacionService, AutenticacionService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
 builder.Services.AddScoped<IPasswordHasher<Usuario>,
     PasswordHasher<Usuario>>();
 
-
+// AUTENTICACIÓN JWT
 
 builder.Services
     .AddAuthentication(
@@ -138,10 +157,11 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
-
-
+// CONSTRUCCIÓN DE LA APLICACIÓN
 
 var app = builder.Build();
+
+// OPENAPI Y SCALAR
 
 if (app.Environment.IsDevelopment())
 {
@@ -151,11 +171,18 @@ if (app.Environment.IsDevelopment())
         options.AddPreferredSecuritySchemes("Bearer"));
 }
 
+// MIDDLEWARES
+
 app.UseHttpsRedirection();
+
+// CORS: DEBE IR ANTES DE AUTENTICACIÓN Y AUTORIZACIÓN
+app.UseCors("AngularPolicy");
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+// CONTROLADORES
 
 app.MapControllers();
 

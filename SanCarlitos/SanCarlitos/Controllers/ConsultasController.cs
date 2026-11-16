@@ -10,7 +10,7 @@ namespace SanCarlitos.Controllers
     [ApiController]
     [Route("api/consultas")]
 
-    [Authorize]
+    //[Authorize]
     public class ConsultasController : ControllerBase
     {
         private readonly IConsultaService _service;
