@@ -21,7 +21,6 @@ using VeterinariaAPI.OpenApi;
 var builder = WebApplication.CreateBuilder(args);
 
 
-//lectura del json para mi jwt 
 
 var jwtSettings = builder.Configuration
     .GetSection(JwtSettings.SectionName)
