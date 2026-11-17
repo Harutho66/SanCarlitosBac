@@ -345,7 +345,7 @@ namespace SanCarlitos.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         // DELETE: api/consultas/5
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Eliminar(int id)

@@ -39,7 +39,7 @@ namespace SanCarlitos.Controllers
         }
 
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<ActionResult<VeterinarioDto>> Crear(
             [FromBody] CrearVeterinarioDto dto)
@@ -52,7 +52,7 @@ namespace SanCarlitos.Controllers
                 veterinario);
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Actualizar(
             int id,
@@ -66,7 +66,7 @@ namespace SanCarlitos.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Eliminar(int id)
         {

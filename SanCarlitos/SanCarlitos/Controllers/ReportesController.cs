@@ -16,7 +16,7 @@ namespace SanCarlitos.Controllers
             _service = service;
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpGet("ingresos-veterinarios")]
         public async Task<IActionResult> ObtenerIngresosVeterinarios(
             [FromQuery] DateTime inicio,

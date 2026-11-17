@@ -47,7 +47,7 @@ namespace SanCarlitos.Controllers
             return Ok(tratamientos);
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> Crear(CrearTratamientoDto dto)
         {
@@ -59,7 +59,7 @@ namespace SanCarlitos.Controllers
             return Ok(resultado.Mensaje);
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Actualizar(
             int id, ActualizarTratamientoDto dto)
@@ -77,7 +77,7 @@ namespace SanCarlitos.Controllers
             return Ok(resultado.Mensaje);
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Eliminar(int id)
         {

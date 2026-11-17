@@ -128,7 +128,7 @@ namespace SanCarlitos.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         // PUT: api/mascotas/5
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Actualizar(
@@ -170,7 +170,7 @@ namespace SanCarlitos.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         // DELETE: api/mascotas/5
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Eliminar(int id)

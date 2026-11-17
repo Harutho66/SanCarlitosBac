@@ -53,7 +53,7 @@ namespace SanCarlitos.Controllers
                 propietario);
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Actualizar(
             int id,
@@ -69,7 +69,7 @@ namespace SanCarlitos.Controllers
         }
 
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Eliminar(int id)
         {
