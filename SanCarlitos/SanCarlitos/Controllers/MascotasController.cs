@@ -35,8 +35,10 @@ namespace SanCarlitos.Controllers
                 var mascotas = await _service.ObtenerTodosAsync();
                 return Ok(mascotas);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
+
                 return StatusCode(500, new
                 {
                     mensaje = "Error al obtener las mascotas."
