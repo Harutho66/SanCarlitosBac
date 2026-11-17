@@ -14,7 +14,7 @@ namespace SanCarlitos.Dtos.Veterinario
 
         [Required(ErrorMessage = "La especialidad es obligatorio.")]
         [StringLength(100)]
-        public string Especilidad { get; set; } = string.Empty;
+        public string Especialidad { get; set; } = string.Empty;
 
 
         [StringLength(20)]
@@ -22,7 +22,7 @@ namespace SanCarlitos.Dtos.Veterinario
 
         [Required(ErrorMessage = "La matricula profesional es obligatorio")]
         [StringLength(50)]
-        public string MatriculaProfesinal { get; set; } = string.Empty;
+        public string MatriculaProfesional { get; set; } = string.Empty;
 
 
 
