@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SanCarlitos.Dtos;
 using SanCarlitos.Dtos.Paginacion;
+using SanCarlitos.Dtos.Tratamiento;
 using SanCarlitos.Services.Interfaces;
 
 namespace SanCarlitos.Controllers
@@ -95,7 +96,7 @@ namespace SanCarlitos.Controllers
         }
         [HttpGet("paginado")]
         public async Task<IActionResult> ObtenerPaginado(
-    [FromQuery] PaginacionQueryDto query)
+    [FromQuery] TratamientoQueryDto query)
         {
             try
             {

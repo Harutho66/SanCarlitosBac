@@ -29,7 +29,7 @@ namespace SanCarlitos.Controllers
         // GET: api/usuarios/paginado
         [HttpGet("paginado")]
         public async Task<IActionResult> ObtenerPaginado(
-            [FromQuery] PaginacionQueryDto query)
+            [FromQuery] UsuarioQueryDto query)
         {
             try
             {

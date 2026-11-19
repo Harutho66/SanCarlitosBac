@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SanCarlitos.Dtos;
+using SanCarlitos.Dtos.Consulta;
 using SanCarlitos.Dtos.Paginacion;
 using SanCarlitos.Services.Interfaces;
 
@@ -385,7 +386,7 @@ namespace SanCarlitos.Controllers
         // GET: api/consultas/paginado
         [HttpGet("paginado")]
         public async Task<IActionResult> ObtenerPaginado(
-            [FromQuery] PaginacionQueryDto query)
+            [FromQuery] ConsultaQueryDto query)
         {
             try
             {

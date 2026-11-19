@@ -86,7 +86,7 @@ namespace SanCarlitos.Controllers
         }
         [HttpGet("paginado")]
         public async Task<IActionResult> ObtenerPaginado(
-    [FromQuery] PaginacionQueryDto query)
+    [FromQuery] VeterinarioQueryDto query)
         {
             try
             {

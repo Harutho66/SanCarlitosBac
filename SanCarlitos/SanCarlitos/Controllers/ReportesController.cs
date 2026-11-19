@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SanCarlitos.Dtos.Paginacion;
+using SanCarlitos.Dtos.Reportes;
 using SanCarlitos.Services.Interfaces;
 
 namespace SanCarlitos.Controllers
@@ -58,7 +59,7 @@ namespace SanCarlitos.Controllers
         public async Task<IActionResult> ObtenerIngresosVeterinariosPaginado(
             [FromQuery] DateTime inicio,
             [FromQuery] DateTime fin,
-            [FromQuery] PaginacionQueryDto query)
+            [FromQuery] ReporteQueryDto query)
         {
             try
             {

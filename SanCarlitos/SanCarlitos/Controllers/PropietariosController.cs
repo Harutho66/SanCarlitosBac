@@ -90,7 +90,7 @@ namespace SanCarlitos.Controllers
         }
         [HttpGet("paginado")]
         public async Task<IActionResult> ObtenerPaginado(
-    [FromQuery] PaginacionQueryDto query)
+    [FromQuery] PropietarioQueryDto query)
         {
             var resultado =
                 await _service.ObtenerPaginadoAsync(query);
