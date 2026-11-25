@@ -8,8 +8,6 @@ namespace SanCarlitos.Repositories
 {
     public class TratamientoRepository : GenericRepository<Tratamiento>, ITratamientoRepository
     {
-        private readonly VeterinariaContext _context;
-
         public TratamientoRepository(VeterinariaContext context)
     : base(context)
         {
