@@ -6,7 +6,7 @@ namespace SanCarlitos.Dtos.Mascota
     {
         public string? Nombre { get; set; }
         public string? Especie { get; set; }
-        public int? PropietarioId { get; set; }
+        public string? PropietarioNombre { get; set; }
         public string OrdenarPor { get; set; } = "Id";
         public bool Descendente { get; set; } = false;
 

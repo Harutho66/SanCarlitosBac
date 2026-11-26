@@ -368,6 +368,7 @@ namespace SanCarlitos.Services
                     VeterinarioId = dto.VeterinarioId,
                     FechaConsulta = dto.FechaConsulta,
                     Motivo = dto.Motivo.Trim(),
+                    Diagnostico = dto.Diagnostico.Trim(),
                     Costo = dto.Costo,
                     Eliminado = false
                 };

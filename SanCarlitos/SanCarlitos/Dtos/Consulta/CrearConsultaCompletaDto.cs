@@ -20,6 +20,9 @@ namespace SanCarlitos.Dtos
             ErrorMessage = "El motivo debe tener entre 3 y 250 caracteres.")]
         public string Motivo { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "El diagnóstico es obligatorio.")]
+        public string Diagnostico { get; set; } = string.Empty;
+
         [Range(0, 1000000,
             ErrorMessage = "El costo de la consulta no puede ser negativo.")]
         public decimal Costo { get; set; }
@@ -53,5 +56,6 @@ namespace SanCarlitos.Dtos
         [Range(0, 1000000,
             ErrorMessage = "El costo del tratamiento no puede ser negativo.")]
         public decimal Costo { get; set; }
+
     }
 }

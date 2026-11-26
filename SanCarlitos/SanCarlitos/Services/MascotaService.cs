@@ -132,8 +132,9 @@ namespace SanCarlitos.Services
 
             return true;
         }
+
         private static System.Linq.Expressions.Expression<Func<Mascota, bool>>
-    CrearFiltro(MascotaQueryDto query)
+         CrearFiltro(MascotaQueryDto query)
         {
             string? nombre = string.IsNullOrWhiteSpace(query.Nombre)
                 ? null : query.Nombre.Trim();
@@ -141,13 +142,15 @@ namespace SanCarlitos.Services
             string? especie = string.IsNullOrWhiteSpace(query.Especie)
                 ? null : query.Especie.Trim();
 
-            int? propietarioId = query.PropietarioId;
+            string? propietarioNombre = string.IsNullOrWhiteSpace(query.PropietarioNombre)
+                ? null : query.PropietarioNombre.Trim();
 
             return m =>
-                (nombre == null || m.Nombre.Contains(nombre)) &&
-                (especie == null || m.Especie == especie) &&
-                (!propietarioId.HasValue ||
-                    m.PropietarioId == propietarioId.Value);
+                (nombre == null && especie == null && propietarioNombre == null)
+                || (nombre != null && m.Nombre.Contains(nombre))
+                || (especie != null && m.Especie.Contains(especie))
+                || (propietarioNombre != null &&
+                    (m.Propietario.Nombre + " " + m.Propietario.Apellido).Contains(propietarioNombre));
         }
 
         private static Func<IQueryable<Mascota>, IOrderedQueryable<Mascota>>
