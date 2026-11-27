@@ -100,12 +100,22 @@ namespace SanCarlitos.Services
             return true;
         }
         public async Task<PagedResultDto<PropietarioDto>>
-    ObtenerPaginadoAsync(PaginacionQueryDto query)
+    ObtenerPaginadoAsync(PropietarioQueryDto query)
         {
             var (items, totalCount) =
                 await _unitOfWork.Propietarios.ObtenerPaginadoAsync(
                     query.PageNumber,
-                    query.PageSize
+                    query.PageSize,
+                    p =>
+                        (string.IsNullOrEmpty(query.Nombre) ||
+                         p.Nombre.Contains(query.Nombre)) &&
+
+                        (string.IsNullOrEmpty(query.Apellido) ||
+                         p.Apellido.Contains(query.Apellido)) &&
+
+                        (string.IsNullOrEmpty(query.Correo) ||
+                         (p.Correo != null &&
+                          p.Correo.Contains(query.Correo)))
                 );
 
             var itemsDto = _mapper.Map<List<PropietarioDto>>(items);
@@ -120,6 +130,5 @@ namespace SanCarlitos.Services
                     totalCount / (double)query.PageSize)
             };
         }
-
     }
 }

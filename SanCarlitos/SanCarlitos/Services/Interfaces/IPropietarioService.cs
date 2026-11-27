@@ -15,8 +15,8 @@ namespace SanCarlitos.Services.Interfaces
         Task<bool> ActualizarAsync(int id,ActualizarPropietarioDto dto);
 
         Task<bool> EliminarAsync(int id);
-        Task<PagedResultDto<PropietarioDto>>
-    ObtenerPaginadoAsync(PaginacionQueryDto query);
+
+        Task<PagedResultDto<PropietarioDto>> ObtenerPaginadoAsync(PropietarioQueryDto query);
 
     }
 }
