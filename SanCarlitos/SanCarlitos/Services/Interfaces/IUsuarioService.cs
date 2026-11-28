@@ -20,8 +20,7 @@ namespace SanCarlitos.Services.Interfaces
             Task<bool> CambiarPasswordAsync(
                 int id,
                 CambiarPasswordDto dto);
-        Task<PagedResultDto<UsuarioDto>> ObtenerPaginadoAsync(
-    PaginacionQueryDto query);
+            Task<PagedResultDto<UsuarioDto>> ObtenerPaginadoAsync(UsuarioQueryDto query);
     }
 
     }

@@ -64,14 +64,28 @@ namespace SanCarlitos.Services
             var veterinario = await _unitOfWork.Veterinarios.ObtenerTodosAsync();
             return _mapper.Map<List<VeterinarioDto>>(veterinario);
         }
-        public async Task<PagedResultDto<VeterinarioDto>> ObtenerPaginadoAsync(
-    PaginacionQueryDto query)
+
+        public async Task<PagedResultDto<VeterinarioDto>> ObtenerPaginadoAsync(VeterinarioQueryDto query)
         {
+            string? nombre = string.IsNullOrWhiteSpace(query.Nombre)
+                ? null : query.Nombre.Trim();
+
+            string? apellido = string.IsNullOrWhiteSpace(query.Apellido)
+                ? null : query.Apellido.Trim();
+
+            string? especialidad = string.IsNullOrWhiteSpace(query.Especialidad)
+                ? null : query.Especialidad.Trim();
+
             var (items, totalCount) =
                 await _unitOfWork.Veterinarios.ObtenerPaginadoAsync(
                     query.PageNumber,
                     query.PageSize,
-                    ordenar: q => q.OrderBy(v => v.Id)
+                    v =>
+                        (nombre == null && apellido == null && especialidad == null)
+                        || (nombre != null && v.Nombre.Contains(nombre))
+                        || (apellido != null && v.Apellido.Contains(apellido))
+                        || (especialidad != null &&
+                            v.Especialidad.Contains(especialidad))
                 );
 
             var itemsDto = _mapper.Map<List<VeterinarioDto>>(items);
@@ -86,5 +100,6 @@ namespace SanCarlitos.Services
                     totalCount / (double)query.PageSize)
             };
         }
+
     }
 }

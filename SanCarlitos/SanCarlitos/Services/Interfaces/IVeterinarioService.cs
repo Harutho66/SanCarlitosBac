@@ -16,8 +16,7 @@ namespace SanCarlitos.Services.Interfaces
 
         Task<bool> EliminarAsync(int id);
 
-        Task<PagedResultDto<VeterinarioDto>> ObtenerPaginadoAsync(
-    PaginacionQueryDto query);
+        Task<PagedResultDto<VeterinarioDto>> ObtenerPaginadoAsync(VeterinarioQueryDto query);
 
     }
 }

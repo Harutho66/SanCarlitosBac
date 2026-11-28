@@ -99,23 +99,29 @@ namespace SanCarlitos.Services
 
             return true;
         }
+
         public async Task<PagedResultDto<PropietarioDto>>
-    ObtenerPaginadoAsync(PropietarioQueryDto query)
+            ObtenerPaginadoAsync(PropietarioQueryDto query)
         {
+            string? nombre = string.IsNullOrWhiteSpace(query.Nombre)
+                ? null : query.Nombre.Trim();
+
+            string? apellido = string.IsNullOrWhiteSpace(query.Apellido)
+                ? null : query.Apellido.Trim();
+
+            string? correo = string.IsNullOrWhiteSpace(query.Correo)
+                ? null : query.Correo.Trim();
+
             var (items, totalCount) =
                 await _unitOfWork.Propietarios.ObtenerPaginadoAsync(
                     query.PageNumber,
                     query.PageSize,
                     p =>
-                        (string.IsNullOrEmpty(query.Nombre) ||
-                         p.Nombre.Contains(query.Nombre)) &&
-
-                        (string.IsNullOrEmpty(query.Apellido) ||
-                         p.Apellido.Contains(query.Apellido)) &&
-
-                        (string.IsNullOrEmpty(query.Correo) ||
-                         (p.Correo != null &&
-                          p.Correo.Contains(query.Correo)))
+                        (nombre == null && apellido == null && correo == null)
+                        || (nombre != null && p.Nombre.Contains(nombre))
+                        || (apellido != null && p.Apellido.Contains(apellido))
+                        || (correo != null && p.Correo != null &&
+                            p.Correo.Contains(correo))
                 );
 
             var itemsDto = _mapper.Map<List<PropietarioDto>>(items);
@@ -130,5 +136,7 @@ namespace SanCarlitos.Services
                     totalCount / (double)query.PageSize)
             };
         }
+
     }
 }
+

@@ -178,14 +178,31 @@ namespace SanCarlitos.Services
             return true;
         }
 
-        public async Task<PagedResultDto<UsuarioDto>> ObtenerPaginadoAsync(
-        PaginacionQueryDto query)
+        public async Task<PagedResultDto<UsuarioDto>> ObtenerPaginadoAsync(UsuarioQueryDto query)
         {
+            string? nombreUsuario = string.IsNullOrWhiteSpace(query.NombreUsuario)
+                ? null : query.NombreUsuario.Trim();
+
+            string? correo = string.IsNullOrWhiteSpace(query.Correo)
+                ? null : query.Correo.Trim();
+
+            string? rol = string.IsNullOrWhiteSpace(query.Rol)
+                ? null : query.Rol.Trim();
+
             var (usuarios, totalCount) =
                 await _unitOfWork.Usuarios.ObtenerPaginadoAsync(
                     query.PageNumber,
                     query.PageSize,
-                    ordenar: u => u.OrderBy(x => x.Id));
+                    u =>
+                        (nombreUsuario == null && correo == null && rol == null)
+                        || (nombreUsuario != null &&
+                            u.NombreUsuario.Contains(nombreUsuario))
+                        || (correo != null &&
+                            u.Correo.Contains(correo))
+                        || (rol != null &&
+                            u.Rol.Contains(rol)),
+                    ordenar: CrearOrdenamiento(query)
+                );
 
             var usuariosDto = _mapper.Map<List<UsuarioDto>>(usuarios);
 
@@ -200,5 +217,26 @@ namespace SanCarlitos.Services
             };
         }
 
+        private Func<IQueryable<Usuario>, IOrderedQueryable<Usuario>> CrearOrdenamiento(UsuarioQueryDto query)
+        {
+            return query.OrdenarPor.ToLowerInvariant() switch
+            {
+                "nombreusuario" => query.Descendente
+                    ? q => q.OrderByDescending(u => u.NombreUsuario).ThenBy(u => u.Id)
+                    : q => q.OrderBy(u => u.NombreUsuario).ThenBy(u => u.Id),
+
+                "correo" => query.Descendente
+                    ? q => q.OrderByDescending(u => u.Correo).ThenBy(u => u.Id)
+                    : q => q.OrderBy(u => u.Correo).ThenBy(u => u.Id),
+
+                "rol" => query.Descendente
+                    ? q => q.OrderByDescending(u => u.Rol).ThenBy(u => u.Id)
+                    : q => q.OrderBy(u => u.Rol).ThenBy(u => u.Id),
+
+                _ => query.Descendente
+                    ? q => q.OrderByDescending(u => u.Id)
+                    : q => q.OrderBy(u => u.Id)
+            };
+        }
     }
 }
